@@ -1,5 +1,5 @@
-#define MAIN_AUX.H
-#ifndef GAME.H
+#define MAIN_AUX_H
+#ifndef GAME_H
 #include "game.h"
 #endif
 #define BOARD_WIDTH 9

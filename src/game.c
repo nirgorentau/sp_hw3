@@ -2,12 +2,14 @@
 
 int** new_board() {
     int** board = malloc(BOARD_SIZE*sizeof(int*));
-    int iter;
-    for (iter=0; iter < BOARD_SIZE; iter++) {
-        board[iter] = malloc(BOARD_SIZE*sizeof(int));
+    int i, j;
+    for (i=0; i < BOARD_SIZE; i++) {
+        board[i] = malloc(BOARD_SIZE*sizeof(int));
     }
-    for (iter=0; iter<BOARD_SIZE*BOARD_SIZE; iter++) {
-        board[iter%BOARD_SIZE][iter/BOARD_SIZE] = 0;
+    for (i=0; i<BOARD_SIZE; i++) {
+        for (j = 0; j < BOARD_SIZE; j++) {
+            board[i][j] = EMPTY_CELL;
+        }
     }
     return board;
 }
@@ -35,6 +37,9 @@ int is_legal(int** board, int x, int y, int val) {
     if (val == EMPTY_CELL) {
         return 1;
     }
+    if (val < 0 || val > BOARD_SIZE) {
+        return 0;
+    }
     for (iter = 0; iter < BOARD_SIZE; iter++) {
         if (board[x][iter] == val || board[iter][y] == val) {
             return 0;
@@ -59,4 +64,16 @@ int set(int** board, int** fixed, int x, int y, int val) {
 
 int hint(int** solved_board, int x, int y) {
     return solved_board[x][y];
+}
+
+int is_full(int** board) {
+    int i, j;
+    for (i = 0; i < BOARD_SIZE; i++) {
+        for (j = 0; j < BOARD_SIZE; j++) {
+            if (board[i][j] == EMPTY_CELL) {
+                return 0;
+            }
+        }
+    }
+    return 1;
 }

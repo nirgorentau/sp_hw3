@@ -1,5 +1,5 @@
-#define SOLVER.H
-#ifndef GAME.H
+#define SOLVER_H
+#ifndef GAME_H
 #include "game.h"
 #endif
 #define UNSOLVABLE NULL  /* Return value of solve functions if board is unsolvable */

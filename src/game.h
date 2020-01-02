@@ -1,5 +1,5 @@
-#define GAME.H
-#ifndef SOLVER.H
+#define GAME_H
+#ifndef SOLVER_H
 #include "solver.h"
 #endif
 #include <stddef.h>
@@ -16,4 +16,4 @@ If is, sets solution to point at a valid solution. */
 int is_legal(int** board, int x, int y, int val); /* checks that the move is legal */
 int set(int** board, int** fixed, int x, int y, int val); /* sets the move if it is legal */
 int hint(int** solved_board, int x, int y); /* gives a hint from the solved board */
-
+int is_full(int** board); /* Checks if board is full, therefore is solved */
