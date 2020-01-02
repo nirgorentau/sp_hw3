@@ -6,6 +6,9 @@ int** new_board() {
     for (iter=0; iter < BOARD_SIZE; iter++) {
         board[iter] = malloc(BOARD_SIZE*sizeof(int));
     }
+    for (iter=0; iter<BOARD_SIZE*BOARD_SIZE; iter++) {
+        board[iter%BOARD_SIZE][iter/BOARD_SIZE] = 0;
+    }
     return board;
 }
 
@@ -46,8 +49,8 @@ int is_legal(int** board, int x, int y, int val) {
     return 1;
 }
 
-int set(int** board, int x, int y, int val) {
-    if (is_legal(board, x, y, val)) {
+int set(int** board, int** fixed, int x, int y, int val) {
+    if (is_legal(board, x, y, val && !fixed[x][y])) {
         board[x][y] = val;
         return 1;
     }
