@@ -74,7 +74,7 @@ void update_options(int* valid_options, int k, int offset)
   }
 }
 
-/* Solve and update game_board with the solution using recursion
+/* Solve and update board with the solution using recursion
 If random is set to 1, the next option from the list of valid options
 for a cell is chosen randomly */
 int solve_rec(int** board, int i, int j, int random)
@@ -133,7 +133,7 @@ int** solve(int** game_board, int random)
 {
   int** solved_board = new_board();
   copy_board(solved_board, game_board);
-  if (solve_rec(game_board, 0, 0, random)) return solved_board;
+  if (solve_rec(solved_board, 0, 0, random)) return solved_board;
   else
   {
     free_board(solved_board);
@@ -149,8 +149,11 @@ void generate_puzzle(int** game_board, int** solved_board ,int** fixed_board, in
   int k = 0;
   int i;
   int j;
-  solve(solved_board, 1); /* solve an empty board randomly */
-  copy_board(game_board, solved_board);
+  int** temp_board;
+  temp_board = solve(game_board, 1); /* solve an empty board randomly */
+  copy_board(game_board, temp_board);
+  copy_board(solved_board, temp_board);
+  free_board(temp_board);
 
   /* choose fixed cells */
   while (k < fixed_count)
