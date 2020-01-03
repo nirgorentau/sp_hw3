@@ -16,6 +16,7 @@ void print_board(int** game_board, int** fixed_board)
         if(j != 0) putchar(' '); /* no space at row start */
         putchar('|');
       }
+      putchar(' ');
       if(fixed_board[j][i]) putchar('.'); /* fixed cell */
       else putchar(' '); /* non-fixed cell */
       if(game_board[j][i]) putchar('0'+game_board[j][i]); /* non-blank cell */
