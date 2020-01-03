@@ -6,6 +6,7 @@ int main()
   int** game_board = new_board();
   int** fixed_board = new_board();
   int** sol_board = new_board();
+  srand(5);
   generate_puzzle(game_board, sol_board, fixed_board, 20);
   print_board(game_board, fixed_board);
   print_board(sol_board, fixed_board);
