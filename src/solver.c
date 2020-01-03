@@ -1,6 +1,5 @@
 #include "solver.h"
 
-
 /*Set next_i and next_j to point to the next cell
 Return 1 if i and j point to the last cell */
 int advance_position(int* next_i, int* next_j, int i, int j)
@@ -11,21 +10,22 @@ int advance_position(int* next_i, int* next_j, int i, int j)
   }
   else
   {
-    if (j < BOARD_SIZE - 1)
+    if (i < BOARD_SIZE - 1)
     {
-      next_j* = j + 1;
+      *next_i = i + 1;
+      *next_j = j;
     }
-    else /* next column */
+    else /* next row */
     {
-      next_j* = 0;
-      next_i* = i + 1;
+      *next_i = 0;
+      *next_j = j + 1;
     }
   }
   return 0;
 }
 
 /* Copy in_board's contents to out_board */
-void copy_board(int** out_board, int** in_board);
+void copy_board(int** out_board, int** in_board)
 {
   int i; int j;
   for (i = 0; i < BOARD_SIZE; i++)
@@ -53,7 +53,7 @@ int get_valid_options(int** valid_options, int** game_board, int i, int j)
   n = 0;
   for (k = 1; k < BOARD_SIZE+1; k++)
   {
-    if(valid_move(game_board, i, j, k))
+    if(is_legal(game_board, i, j, k))
     {
       (*valid_options)[n] = k; /* add valid move */
       n++; /* update size */
@@ -77,7 +77,7 @@ void update_options(int* valid_options, int k, int offset)
 /* Solve and update game_board with the solution using recursion
 If random is set to 1, the next option from the list of valid options
 for a cell is chosen randomly */
-int solve_rec(int** board, int i, int j, int random);
+int solve_rec(int** board, int i, int j, int random)
 {
   int k;
   int offset;
@@ -102,7 +102,7 @@ int solve_rec(int** board, int i, int j, int random);
           return 1; /* solved */
         }
       }
-      else /*we have a valid option for the last cell */
+      else /* we have a valid option for the last cell */
       {
         free(valid_options);
         return 1;
@@ -112,13 +112,12 @@ int solve_rec(int** board, int i, int j, int random);
     board[i][j] = EMPTY_CELL;
     free(valid_options);
     return 0;
-    }
   }
   else /* not an empty cell */
   {
-    if(advance_position(&next_i, &next_j, i, j) != 1))
+    if(advance_position(&next_i, &next_j, i, j) != 1)
     {
-      return solve_rec(board, next_i, next_j);
+      return solve_rec(board, next_i, next_j, random);
     }
     else /* last cell */
     {
@@ -134,10 +133,10 @@ int** solve(int** game_board, int random)
 {
   int** solved_board = new_board();
   copy_board(solved_board, game_board);
-  if (solve_rec(board, 0, 0, random) return solved_board;
+  if (solve_rec(game_board, 0, 0, random)) return solved_board;
   else
   {
-    free_board(board);
+    free_board(solved_board);
     return NULL;
   }
 }

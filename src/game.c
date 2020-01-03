@@ -10,7 +10,7 @@ int** new_board()
   }
   for (i = 0; i < BOARD_SIZE; i++)
   {
-    board[i] = calloc(sizeof(int) * BOARD_SIZE);
+    board[i] = calloc(BOARD_SIZE, sizeof(int));
     if(board[i] == NULL)
     {
       exit(-1);
@@ -53,7 +53,7 @@ int is_legal(int** board, int x, int y, int val) {
         }
     }
     for (iter = 0; iter < BLOCK_SIZE; iter++) {
-        if (board[(iter%BLOCK_SIZE) + x_block_offset][(iter/BLOCK_SIZE) + y_block_offset] == val) {
+        if (board[(iter%BLOCK_SIZE) + x_block_offset*BLOCK_SIZE][(iter/BLOCK_SIZE) + y_block_offset*BLOCK_SIZE] == val) {
             return 0;
         }
 
