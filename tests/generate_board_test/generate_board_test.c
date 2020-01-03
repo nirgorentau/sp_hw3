@@ -8,6 +8,7 @@ int main()
   int** sol_board = new_board();
   generate_puzzle(game_board, sol_board, fixed_board, 20);
   print_board(game_board, fixed_board);
+  print_board(sol_board, fixed_board);
   free_board(game_board);
   free_board(fixed_board);
   free_board(sol_board);
