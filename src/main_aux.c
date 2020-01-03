@@ -1,5 +1,7 @@
 #include "main_aux.h"
 #include <stdio.h>
+
+/* Print the board to stdout */
 void print_board(int** game_board, int** fixed_board)
 {
   int i = 0;

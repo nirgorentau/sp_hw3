@@ -1,5 +1,8 @@
 #include "solver.h"
 
+
+/*Set next_i and next_j to point to the next cell
+Return 1 if i and j point to the last cell */
 int advance_position(int* next_i, int* next_j, int i, int j)
 {
   if (i >= BOARD_SIZE-1 && j >= BOARD_SIZE-1) /* can't advance */
@@ -21,6 +24,7 @@ int advance_position(int* next_i, int* next_j, int i, int j)
   return 0;
 }
 
+/* Copy in_board's contents to out_board */
 void copy_board(int** out_board, int** in_board);
 {
   int i; int j;
@@ -33,6 +37,9 @@ void copy_board(int** out_board, int** in_board);
   }
 }
 
+/*Allocate and fill valid_options with the valid options for cell i,j
+in game_board
+Return the number of valid options */
 int get_valid_options(int** valid_options, int** game_board, int i, int j)
 {
   int k;
@@ -40,6 +47,7 @@ int get_valid_options(int** valid_options, int** game_board, int i, int j)
   *valid_options = malloc(sizeof(int) * BOARD_SIZE);
   if(valid_options == NULL) 
   {
+    /* TODO: print error message */
     exit(-1); /* malloc failed */
   }
   n = 0;
@@ -54,7 +62,8 @@ int get_valid_options(int** valid_options, int** game_board, int i, int j)
   return n; /* the number of valid options */
 }
 
-/* i is the chosen index, k is the current "turn" */
+/* Shift the contents of valid_options based on the chosen option 
+offset is the chosen index, k is the current "turn" */
 void update_options(int* valid_options, int k, int offset)
 {
   int i;
@@ -65,7 +74,10 @@ void update_options(int* valid_options, int k, int offset)
   }
 }
 
-int solve_rec(int** game_board, int i, int j, int random);
+/* Solve and update game_board with the solution using recursion
+If random is set to 1, the next option from the list of valid options
+for a cell is chosen randomly */
+int solve_rec(int** board, int i, int j, int random);
 {
   int k;
   int offset;
@@ -73,18 +85,18 @@ int solve_rec(int** game_board, int i, int j, int random);
   int next_i;
   int next_j;
   int* valid_options;
-  if (game_board[i][j] == EMPTY_CELL)
+  if (board[i][j] == EMPTY_CELL)
   {
-    number_of_options = get_valid_options(&valid_options, game_board, i, j);
+    number_of_options = get_valid_options(&valid_options, board, i, j);
     for(k = 0; k < number_of_options; k++)
     {
-      offset = 0;
+      offset = 0; /* always choose the first valid option not yet tried if random=0 */
       if(random && (number_of_options - k) > 1) offset = rand()%(number_of_options - k);
-      game_board[i][j] = valid_options[k+offset];
+      board[i][j] = valid_options[k+offset];
       update_options(valid_options, k, offset);
       if(advance_position(&next_i, &next_j, i, j) != 1)
       {
-        if(solve_rec(game_board, next_i, next_j, random))
+        if(solve_rec(board, next_i, next_j, random))
         {
           free(valid_options);
           return 1; /* solved */
@@ -97,7 +109,7 @@ int solve_rec(int** game_board, int i, int j, int random);
       } 
     }
     /* not solvable */
-    game_board[i][j] = EMPTY_CELL;
+    board[i][j] = EMPTY_CELL;
     free(valid_options);
     return 0;
     }
@@ -106,7 +118,7 @@ int solve_rec(int** game_board, int i, int j, int random);
   {
     if(advance_position(&next_i, &next_j, i, j) != 1))
     {
-      return solve_rec(game_board, next_i, next_j);
+      return solve_rec(board, next_i, next_j);
     }
     else /* last cell */
     {
@@ -115,6 +127,9 @@ int solve_rec(int** game_board, int i, int j, int random);
   } 
 }
 
+/* Solves game_board, randomly if random is not 0
+A newly allocated solved board is returned if there is a solution
+or NULL if there isn't one */
 int** solve(int** game_board, int random)
 {
   int** solved_board = new_board();
@@ -127,7 +142,10 @@ int** solve(int** game_board, int random)
   }
 }
 
-void generate_puzzle(int** game_board, int** solved_board ,int** fixed_board, int fixed)
+/* Input: game_board, solved_board, fixed_board are EMPTY_CELL filled boards
+Output: A puzzle with fixed_count fixed cells is randomly generated
+The input boards contents are filled accordingly */
+void generate_puzzle(int** game_board, int** solved_board ,int** fixed_board, int fixed_count)
 {
   int k = 0;
   int i;
@@ -135,7 +153,8 @@ void generate_puzzle(int** game_board, int** solved_board ,int** fixed_board, in
   solve(solved_board, 1); /* solve an empty board randomly */
   copy_board(game_board, solved_board);
 
-  while (k < fixed)
+  /* choose fixed cells */
+  while (k < fixed_count)
   {
     i = rand()%BOARD_SIZE;
     j = rand()%BOARD_SIZE;
