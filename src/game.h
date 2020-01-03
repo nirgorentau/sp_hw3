@@ -7,6 +7,9 @@
 #define BOARD_SIZE 9
 #define BLOCK_SIZE 3
 #define EMPTY_CELL 0
+#define INVALID_VALUE 0
+#define FIXED_VALUE -1
+#define LEGAL_MOVE 1
 
 int** new_board(); /* allocates a new board and returns a pointer to it */
 void free_board(int** board); /* frees a board's allocated memory */
