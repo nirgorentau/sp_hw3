@@ -29,3 +29,30 @@ void print_board(int** game_board, int** fixed_board)
   }
   printf(SEPERATOR_ROW); /* final row seperator */
 }
+
+/* Initalization. Sets board to a new board with <fixed_count> empty cells. */
+int init(int** board, int** fixed, int* fixed_count, int** sol) {
+  printf("Please enter the number of cells to fill [0-80]:\n");
+  scanf("%d", fixed_count);
+  if (feof(stdin)) {
+    printf("Exiting...\n");
+    free_board(board);
+    free_board(fixed);
+    free_board(sol);
+    return 0;
+  }
+  while (*fixed_count < 0 || *fixed_count > 80) {
+    printf("Error: invalid number of cells to fill (should be between 0 and 80)\n");
+    scanf("%d", fixed_count);
+    if (feof(stdin)) {
+      printf("Exiting...\n");
+      free_board(board);
+      free_board(fixed);
+      free_board(sol);
+      return 0;
+    }
+  }
+  generate_puzzle(board, sol, fixed, *fixed_count);
+  print_board(board, fixed);
+  return 1;
+}
