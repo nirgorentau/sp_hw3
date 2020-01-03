@@ -31,6 +31,7 @@ Returns:
 */
 int read_command(char* line, int** board, int** fixed, int** getSol) {
     char* cmd;
+    int ret;
     int values[3]; /* Will conatin x, y, val in order */
     cmd = strtok(line, " \t\r\n");
     if (strcmp(cmd, "exit") == 0) {
@@ -43,16 +44,28 @@ int read_command(char* line, int** board, int** fixed, int** getSol) {
             if (load_ints(values, 3, cmd) == CMD_ERR) {
                 return CMD_ERR;
             }
-            if (set(board, fixed, values[0]-1, values[1]-1, values[2])) {
+            ret = set(board, fixed, values[0]-1, values[1]-1, values[2]);
+            if (ret == LEGAL_MOVE) {
                 print_board(board, fixed);
+                if (is_full(board)) {
+                    printf("Puzzle solved successfully\n");
+                }
+            } else if (ret == INVALID_VALUE) {
+                printf("Error: value is invalid\n");
+            } else {
+                printf("Error: cell is fixed\n");
             }
         } else if (strcmp(cmd, "hint") == 0) {
             if (load_ints(values, 2, cmd) == CMD_ERR) {
                 return CMD_ERR;
             }
-            hint(board, values[0]-1, values[1]-1);
+            printf("Hint: set cell to %d\n", hint(board, values[0]-1, values[1]-1));
         } else if (strcmp(cmd, "validate") == 0) {
-            validate(board, getSol);
+            if (validate(board, getSol)) {
+                printf("Validation passed: board is solvable\n");
+            } else {
+                printf("Validation failed: board is unsolvable\n");
+            }
         } else {
             return CMD_ERR;
         }
