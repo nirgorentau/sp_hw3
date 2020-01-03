@@ -1,17 +1,22 @@
 #include "game.h"
 
-int** new_board() {
-    int** board = malloc(BOARD_SIZE*sizeof(int*));
-    int i, j;
-    for (i=0; i < BOARD_SIZE; i++) {
-        board[i] = malloc(BOARD_SIZE*sizeof(int));
+int** new_board()
+{
+  int i;
+  int** board = malloc(sizeof(int*) * BOARD_SIZE);
+  if(board == NULL)
+  {
+    exit(-1);
+  }
+  for (i = 0; i < BOARD_SIZE; i++)
+  {
+    board[i] = calloc(sizeof(int) * BOARD_SIZE);
+    if(board[i] == NULL)
+    {
+      exit(-1);
     }
-    for (i=0; i<BOARD_SIZE; i++) {
-        for (j = 0; j < BOARD_SIZE; j++) {
-            board[i][j] = EMPTY_CELL;
-        }
-    }
-    return board;
+  }
+  return board;
 }
 
 void free_board(int** board) {
@@ -23,10 +28,12 @@ void free_board(int** board) {
 }
 
 int validate(int** board, int** solution) {
-    solution = solve_deterministic(board);
-    if (solution == UNSOLVABLE) {
+    int** temp_solution = solve(board, 0);
+    if (temp_solution == UNSOLVABLE) {
         return 0;
     }
+    free(solution);
+    solution = temp_solution;
     return 1;
 }
 

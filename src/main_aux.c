@@ -1,13 +1,15 @@
 #include "main_aux.h"
 #include <stdio.h>
+
+/* Print the board to stdout */
 void print_board(int** game_board, int** fixed_board)
 {
   int i = 0;
   int j = 0;
-  for (i = 0; i < BOARD_HEIGHT; i++)
+  for (i = 0; i < BOARD_SIZE; i++)
   {
     if((i % 3) == 0) printf(SEPERATOR_ROW); /* row seperator before every 4 rows */
-    for (j = 0; j < BOARD_WIDTH; j++)
+    for (j = 0; j < BOARD_SIZE; j++)
     {
       if ((j % 3) == 0) /* pipe before every 3 cells */
       {
