@@ -44,7 +44,7 @@ int is_legal(int** board, int x, int y, int val) {
     if (val == EMPTY_CELL) {
         return LEGAL_MOVE;
     }
-    if (val < 0 || val > BOARD_SIZE || x < 1 || x > BOARD_SIZE || y < 1 || y >BOARD_SIZE) {
+    if (val < 0 || val > BOARD_SIZE || x < 0 || x >= BOARD_SIZE || y < 0 || y >= BOARD_SIZE) {
         return INVALID_VALUE;
     }
     for (iter = 0; iter < BOARD_SIZE; iter++) {
