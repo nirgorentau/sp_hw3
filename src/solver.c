@@ -70,7 +70,7 @@ void update_options(int* valid_options, int k, int offset)
   i = k + offset;
   for (; i > k; i--)
   {
-    valid_options[i+1] = valid_options[i];
+    valid_options[i] = valid_options[i-1];
   }
 }
 
