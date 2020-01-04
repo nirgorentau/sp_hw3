@@ -1,9 +1,10 @@
 #include "parser.h"
 
-/*
+/* function load_ints
 A support function for read_command.
 Loads the first <count> integers from input into <target>.
 We assume that we already recieved a valid command.
+returns CMD_ERR if not enough integers were provided. otherwise returns CMD_SUCCESS
 */
 int load_ints(int* target, int count) {
     int iter;
@@ -18,7 +19,7 @@ int load_ints(int* target, int count) {
     return CMD_SUCCESS;
 }
 
-/*
+/* function parser
 Recieves a line from the main function and parses it.
 Also requires the game-board, the fixed-board and a pointer to receive a solution
 if parsed command requires it.
@@ -29,7 +30,7 @@ Returns:
     CMD_EXIT if command is "exit"
     CMD_RESTART if command is "restart"
 */
-int read_command(char* line, int** board, int** fixed, int** getSol) {
+int read_command(char* line, int** board, int** fixed, int** solution) {
     char* cmd;
     int ret;
     int values[3]; /* Will conatin x, y, val in order */
@@ -37,6 +38,7 @@ int read_command(char* line, int** board, int** fixed, int** getSol) {
     if (cmd == NULL) {
         return CMD_SUCCESS;
     }
+    /* test for every valid command */
     if (strcmp(cmd, "exit") == 0) {
         return CMD_EXIT;
     } else if (strcmp(cmd, "restart") == 0) {
@@ -61,9 +63,9 @@ int read_command(char* line, int** board, int** fixed, int** getSol) {
             if (load_ints(values, 2) == CMD_ERR) {
                 return CMD_ERR;
             }
-            printf("Hint: set cell to %d\n", hint(getSol, values[0]-1, values[1]-1));
+            printf("Hint: set cell to %d\n", hint(solution, values[0]-1, values[1]-1));
         } else if (strcmp(cmd, "validate") == 0) {
-            if (validate(board, getSol)) {
+            if (validate(board, solution)) {
                 printf("Validation passed: board is solvable\n");
             } else {
                 printf("Validation failed: board is unsolvable\n");

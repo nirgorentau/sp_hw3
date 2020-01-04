@@ -6,6 +6,17 @@
 #include <time.h>
 #include <stdlib.h>
 
+/* function main
+A sudoku game. The user first inputs how many cells they want filled in.
+Then the user tries to fill the board.
+Commands:
+set X Y Z - sets cell at <X, Y> to Z (<X,Y> are 1-indexed)
+hint X Y - provide a hint for cell <X, Y> (may be outdated)
+validate - make sure board is solvable (and update hints)
+restart - start a new game
+exit - exit the game
+The user can pass a seed for randomization.
+*/ 
 int main(int argc, char** argv)
 {
   int cmd_code = CMD_SUCCESS;
