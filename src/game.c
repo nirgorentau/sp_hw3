@@ -1,5 +1,7 @@
 #include "game.h"
-
+/*
+Creates a new board, with all cells set to EMPTY_CELL
+*/
 int** new_board()
 {
   int i, j;
@@ -23,7 +25,9 @@ int** new_board()
   }
   return board;
 }
-
+/*
+frees the memory that the board uses.
+*/
 void free_board(int** board) {
     int iter;
     for (iter=0; iter < BOARD_SIZE; iter++) {
@@ -32,6 +36,10 @@ void free_board(int** board) {
     free(board);
 }
 
+/*
+Checkes whether <bard> is solvable or not.
+returns 1 if solvable, 0 otherwise.
+*/
 int validate(int** board, int** solution) {
     int** temp_solution = solve(board, 0);
     if (temp_solution == UNSOLVABLE) {
@@ -42,6 +50,10 @@ int validate(int** board, int** solution) {
     return 1;
 }
 
+/*
+checks if placing <val> in <x,y> is a valid move.
+returns LEGAL_MOVE if it is, INVALID_VALUE if not.
+*/
 int is_legal(int** board, int x, int y, int val) {
     int i, j;
     int x_block_offset = x/3;
@@ -67,6 +79,13 @@ int is_legal(int** board, int x, int y, int val) {
     return LEGAL_MOVE;
 }
 
+/*
+Validates the given move and performs it if valid.
+Returns:
+LEGAL_MOVE if move was valid
+INVALID_VALUE if <x,y,val> not in valid range or if column, row or block already contains <val>
+FIXED_VALUE if cell is fixed and cannot be changed
+*/
 int set(int** board, int** fixed, int x, int y, int val) {
     if (fixed[x][y] != EMPTY_CELL) {
         return FIXED_VALUE;
@@ -78,10 +97,19 @@ int set(int** board, int** fixed, int x, int y, int val) {
     return LEGAL_MOVE;
 }
 
+/*
+Returns a hint to <x, y> according to <solved_board>
+*/
 int hint(int** solved_board, int x, int y) {
     return solved_board[x][y];
 }
 
+
+/*
+Checks if the board is full.
+returns 1 if is full, 0 else.
+Assumption is that full board == solved board
+*/
 int is_full(int** board) {
     int i, j;
     for (i = 0; i < BOARD_SIZE; i++) {

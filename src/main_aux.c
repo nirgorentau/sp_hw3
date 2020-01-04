@@ -34,9 +34,12 @@ void print_board(int** game_board, int** fixed_board)
 int init(int** board, int** fixed, int** sol) {
   int fixed_count;
   int** empty = new_board();
+
+  /* Clean the given board in case of restart */
   copy_board(board, empty);
   copy_board(fixed, empty);
   copy_board(sol, empty);
+  
   printf("Please enter the number of cells to fill [0-80]:\n");
   scanf("%d", &fixed_count);
   if (feof(stdin)) {

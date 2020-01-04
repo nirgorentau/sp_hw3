@@ -2,8 +2,8 @@
 
 /*
 A support function for read_command.
-Loads the first <count> integers in <line> into <target>.
-We assume that <line> is a valid command (since we only call if if it's a valid command)
+Loads the first <count> integers from input into <target>.
+We assume that we already recieved a valid command.
 */
 int load_ints(int* target, int count) {
     int iter;
