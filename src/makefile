@@ -1,7 +1,8 @@
 CC = gcc
 OBJS = main.o main_aux.o game.o solver.o parser.o
 EXEC = sudoku
-COMP_FLAG = -ansi -Wall -Wextra -Werror -pedantic-errors
+#TODO: add -Werror before submission
+COMP_FLAG = -ansi -Wall -Wextra -pedantic-errors
 
 $(EXEC): $(OBJS)
 	$(CC) $(OBJS) -o $@

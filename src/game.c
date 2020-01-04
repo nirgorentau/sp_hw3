@@ -53,7 +53,7 @@ int is_legal(int** board, int x, int y, int val) {
         }
     }
     for (iter = 0; iter < BOARD_SIZE; iter++) {
-        if (board[(iter%BLOCK_SIZE) + x_block_offset**BLOCK_SIZE][(iter/BLOCK_SIZE) + y_block_offset**BLOCK_SIZE] == val) {
+        if (board[(iter%BLOCK_SIZE) + x_block_offset*BLOCK_SIZE][(iter/BLOCK_SIZE) + y_block_offset*BLOCK_SIZE] == val) {
             return INVALID_VALUE;
         }
 

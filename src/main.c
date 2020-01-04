@@ -6,13 +6,13 @@
 #include <time.h>
 #include <stdlib.h>
 
-int main(int argc, char* argv)
+int main(int argc, char** argv)
 {
   int cells, iter;
   int cmd_code = CMD_SUCCESS;
-  int** board=NULL;
-  int** fixed=NULL;
-  int** sol=NULL;
+  int** board=new_board();
+  int** fixed=new_board();
+  int** sol=new_board();
   char line[1024];
   srand(atoi(argv[1]));
   if (!init(board, fixed, &cells, sol)) {
@@ -24,7 +24,6 @@ int main(int argc, char* argv)
       free_board(board);
       free_board(fixed);
       free_board(sol);
-      free(line);
       return 0;
     }
     cmd_code = read_command(line, board, fixed, sol);
@@ -40,6 +39,5 @@ int main(int argc, char* argv)
   free_board(board);
   free_board(fixed);
   free_board(sol);
-  free(line);
   return 0;
 }
