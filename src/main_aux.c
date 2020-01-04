@@ -39,6 +39,8 @@ int init(int** board, int** fixed, int** sol) {
   copy_board(board, empty);
   copy_board(fixed, empty);
   copy_board(sol, empty);
+
+  free_board(empty);
   
   printf("Please enter the number of cells to fill [0-80]:\n");
   scanf("%d", &fixed_count);

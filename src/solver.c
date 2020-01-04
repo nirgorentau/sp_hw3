@@ -149,7 +149,7 @@ void generate_puzzle(int** game_board, int** solved_board ,int** fixed_board, in
   int k = 0;
   int i;
   int j;
-  int** temp_board = new_board();
+  int** temp_board;
   temp_board = solve(game_board, 1); /* solve an empty board randomly */
   copy_board(game_board, temp_board);
   copy_board(solved_board, temp_board);

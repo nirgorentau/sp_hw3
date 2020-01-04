@@ -37,7 +37,7 @@ void free_board(int** board) {
 }
 
 /*
-Checkes whether <bard> is solvable or not.
+Checkes whether <board> is solvable or not.
 returns 1 if solvable, 0 otherwise.
 */
 int validate(int** board, int** solution) {
@@ -45,8 +45,8 @@ int validate(int** board, int** solution) {
     if (temp_solution == UNSOLVABLE) {
         return 0;
     }
-    free(solution);
-    solution = temp_solution;
+    copy_board(solution, temp_solution);
+    free_board(temp_solution);
     return 1;
 }
 
