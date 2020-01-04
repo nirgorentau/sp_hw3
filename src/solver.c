@@ -53,7 +53,7 @@ int get_valid_options(int** valid_options, int** game_board, int i, int j)
   n = 0;
   for (k = 1; k < BOARD_SIZE+1; k++)
   {
-    if(is_legal(game_board, i, j, k))
+    if(is_legal(game_board, i, j, k) == LEGAL_MOVE)
     {
       (*valid_options)[n] = k; /* add valid move */
       n++; /* update size */
@@ -149,7 +149,7 @@ void generate_puzzle(int** game_board, int** solved_board ,int** fixed_board, in
   int k = 0;
   int i;
   int j;
-  int** temp_board;
+  int** temp_board = new_board();
   temp_board = solve(game_board, 1); /* solve an empty board randomly */
   copy_board(game_board, temp_board);
   copy_board(solved_board, temp_board);

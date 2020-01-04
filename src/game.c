@@ -2,7 +2,7 @@
 
 int** new_board()
 {
-  int i;
+  int i, j;
   int** board = malloc(sizeof(int*) * BOARD_SIZE);
   if(board == NULL)
   {
@@ -15,6 +15,11 @@ int** new_board()
     {
       exit(-1);
     }
+  }
+  for (i = 0; i < BOARD_SIZE; i++) {
+      for (j = 0; j < BOARD_SIZE; j++) {
+          board[i][j] = EMPTY_CELL;
+      }
   }
   return board;
 }
@@ -38,7 +43,7 @@ int validate(int** board, int** solution) {
 }
 
 int is_legal(int** board, int x, int y, int val) {
-    int iter;
+    int i, j;
     int x_block_offset = x/3;
     int y_block_offset = y/3;
     if (val == EMPTY_CELL) {
@@ -47,26 +52,27 @@ int is_legal(int** board, int x, int y, int val) {
     if (val < 0 || val > BOARD_SIZE || x < 0 || x >= BOARD_SIZE || y < 0 || y >= BOARD_SIZE) {
         return INVALID_VALUE;
     }
-    for (iter = 0; iter < BOARD_SIZE; iter++) {
-        if (board[x][iter] == val || board[iter][y] == val) {
+    for (i = 0; i < BOARD_SIZE; i++) {
+        if (board[x][i] == val || board[i][y] == val) {
             return INVALID_VALUE;
         }
     }
-    for (iter = 0; iter < BLOCK_SIZE; iter++) {
-        if (board[(iter%BLOCK_SIZE) + x_block_offset][(iter/BLOCK_SIZE) + y_block_offset] == val) {
-            return INVALID_VALUE;
+    for (i = 0; i < BLOCK_SIZE; i++) {
+        for (j = 0; j < BLOCK_SIZE; j++) {
+            if (board[i + x_block_offset*BLOCK_SIZE][j + y_block_offset*BLOCK_SIZE] == val) {
+                return INVALID_VALUE;
+            }
         }
-
     }
     return LEGAL_MOVE;
 }
 
 int set(int** board, int** fixed, int x, int y, int val) {
+    if (fixed[x][y] != EMPTY_CELL) {
+        return FIXED_VALUE;
+    }
     if (is_legal(board, x, y, val) == INVALID_VALUE) {
         return INVALID_VALUE;
-    }
-    if (fixed[x][y] == 1) {
-        return FIXED_VALUE;
     }
     board[x][y] = val;
     return LEGAL_MOVE;

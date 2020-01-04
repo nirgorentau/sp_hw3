@@ -5,9 +5,9 @@ A support function for read_command.
 Loads the first <count> integers in <line> into <target>.
 We assume that <line> is a valid command (since we only call if if it's a valid command)
 */
-int load_ints(int* target, int count, char* line) {
+int load_ints(int* target, int count) {
     int iter;
-    char* tmp = strtok(line, " \t\r\n"); /* Skip the first word, as we can assume it's a command */
+    char* tmp;
     for (iter = 0; iter < count; iter++) {
         tmp = strtok(NULL, " \t\r\n");
         if (tmp == NULL) {
@@ -34,14 +34,16 @@ int read_command(char* line, int** board, int** fixed, int** getSol) {
     int ret;
     int values[3]; /* Will conatin x, y, val in order */
     cmd = strtok(line, " \t\r\n");
+    if (cmd == NULL) {
+        return CMD_SUCCESS;
+    }
     if (strcmp(cmd, "exit") == 0) {
         return CMD_EXIT;
     } else if (strcmp(cmd, "restart") == 0) {
-        printf("restart");
         return CMD_RESTART;
-    } else if (!is_full(board)) { /* We want to accept any other commands only if the game isn't finished */
+    } else if (is_full(board) == 0) { /* We want to accept any other commands only if the game isn't finished */
         if (strcmp(cmd, "set") == 0) {
-            if (load_ints(values, 3, cmd) == CMD_ERR) {
+            if (load_ints(values, 3) == CMD_ERR) {
                 return CMD_ERR;
             }
             ret = set(board, fixed, values[0]-1, values[1]-1, values[2]);
@@ -56,10 +58,10 @@ int read_command(char* line, int** board, int** fixed, int** getSol) {
                 printf("Error: cell is fixed\n");
             }
         } else if (strcmp(cmd, "hint") == 0) {
-            if (load_ints(values, 2, cmd) == CMD_ERR) {
+            if (load_ints(values, 2) == CMD_ERR) {
                 return CMD_ERR;
             }
-            printf("Hint: set cell to %d\n", hint(board, values[0]-1, values[1]-1));
+            printf("Hint: set cell to %d\n", hint(getSol, values[0]-1, values[1]-1));
         } else if (strcmp(cmd, "validate") == 0) {
             if (validate(board, getSol)) {
                 printf("Validation passed: board is solvable\n");

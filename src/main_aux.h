@@ -6,4 +6,4 @@
 
 /* Print the board to stdout */
 void print_board(int** game_board, int** fixed_board);
-int init(int** board, int** fixed, int* fixed_count, int** sol);
+int init(int** board, int** fixed, int** sol);
