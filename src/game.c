@@ -64,13 +64,18 @@ int is_legal(int** board, int x, int y, int val) {
     int i, j;
     int x_block_offset = x/3;
     int y_block_offset = y/3;
+    int old_val;
     /* Cleaning a cell is always valid */
     if (val == EMPTY_CELL) {
         return LEGAL_MOVE;
     }
+    /* Ignore current cell value */
+    old_val = board[x][y];
+    board[x][y] = -1;
     /* Check column and row */
     for (i = 0; i < BOARD_SIZE; i++) {
         if (board[x][i] == val || board[i][y] == val) {
+            board[x][y] = old_val;
             return INVALID_VALUE;
         }
     }
@@ -78,11 +83,12 @@ int is_legal(int** board, int x, int y, int val) {
     for (i = 0; i < BLOCK_SIZE; i++) {
         for (j = 0; j < BLOCK_SIZE; j++) {
             if (board[i + x_block_offset*BLOCK_SIZE][j + y_block_offset*BLOCK_SIZE] == val) {
+                board[x][y] = old_val;
                 return INVALID_VALUE;
             }
         }
     }
-
+    board[x][y] = old_val;
     return LEGAL_MOVE;
 }
 
