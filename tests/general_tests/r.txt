@@ -1055,9 +1055,28 @@ Puzzle solved successfully
 Error: invalid command
 Please enter the number of cells to fill [0-80]:
 Error: invalid number of cells to fill (should be between 0 and 80)
+Please enter the number of cells to fill [0-80]:
 Error: invalid number of cells to fill (should be between 0 and 80)
+Please enter the number of cells to fill [0-80]:
 Error: invalid number of cells to fill (should be between 0 and 80)
+Please enter the number of cells to fill [0-80]:
 Error: invalid number of cells to fill (should be between 0 and 80)
+Please enter the number of cells to fill [0-80]:
 Error: invalid number of cells to fill (should be between 0 and 80)
+Please enter the number of cells to fill [0-80]:
 Error: invalid number of cells to fill (should be between 0 and 80)
+Please enter the number of cells to fill [0-80]:
+----------------------------------
+|          |    .5 .3 |       .7 |
+| .9    .5 | .2       |    .4    |
+| .1    .6 |       .4 |    .2    |
+----------------------------------
+| .5    .3 | .7       |          |
+| .6 .9 .2 |       .8 | .5    .4 |
+|          |    .2    | .3       |
+----------------------------------
+|          |          | .7       |
+|    .1    | .6       |          |
+| .2       | .5       |          |
+----------------------------------
 Exiting...

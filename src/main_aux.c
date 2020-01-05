@@ -43,8 +43,7 @@ int init(int** board, int** fixed, int** sol) {
   free_board(empty);
   
   printf("Please enter the number of cells to fill [0-80]:\n");
-  scanf("%d", &fixed_count);
-  if (feof(stdin)) {
+  if (scanf("%d", &fixed_count) == EOF) {
     printf("Exiting...\n");
     free_board(board);
     free_board(fixed);
@@ -53,8 +52,8 @@ int init(int** board, int** fixed, int** sol) {
   }
   while (fixed_count < 0 || fixed_count > 80) {
     printf("Error: invalid number of cells to fill (should be between 0 and 80)\n");
-    scanf("%d", &fixed_count);
-    if (feof(stdin)) {
+    printf("Please enter the number of cells to fill [0-80]:\n");
+    if ((scanf("%d", &fixed_count) == EOF)) {
       printf("Exiting...\n");
       free_board(board);
       free_board(fixed);
