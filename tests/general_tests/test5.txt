@@ -1,0 +1,10 @@
+49
+validate 2222
+restart 80
+40
+exit
+set 1 1 1
+restart 
+80
+validate
+hint 1

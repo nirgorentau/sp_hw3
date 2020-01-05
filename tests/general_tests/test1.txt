@@ -1,0 +1,6 @@
+50
+set 3 2 1
+set 3 2 0
+set 3 2 7
+validate
+set 9 8 1
