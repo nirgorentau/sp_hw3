@@ -1,4 +1,5 @@
 #include "game.h"
+#include <stdio.h>
 /* function new_board
 Creates a new board, with all cells set to EMPTY_CELL
 */
@@ -8,6 +9,7 @@ int** new_board()
   int** board = malloc(sizeof(int*) * BOARD_SIZE);
   if(board == NULL)
   {
+    printf("Error: malloc failed\n");
     exit(-1);
   }
   for (i = 0; i < BOARD_SIZE; i++)
@@ -15,6 +17,7 @@ int** new_board()
     board[i] = calloc(BOARD_SIZE, sizeof(int));
     if(board[i] == NULL)
     {
+      printf("Error: calloc failed\n");
       exit(-1);
     }
   }

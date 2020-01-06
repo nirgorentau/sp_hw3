@@ -1,5 +1,5 @@
 #include "solver.h"
-
+#include <stdio.h>
 /*Set next_i and next_j to point to the next cell
 Return 1 if i and j point to the last cell */
 int advance_position(int* next_i, int* next_j, int i, int j)
@@ -47,7 +47,7 @@ int get_valid_options(int** valid_options, int** game_board, int i, int j)
   *valid_options = malloc(sizeof(int) * BOARD_SIZE);
   if(valid_options == NULL) 
   {
-    /* TODO: print error message */
+    printf("Error: malloc failed\n");
     exit(-1); /* malloc failed */
   }
   n = 0;
